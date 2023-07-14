@@ -33,6 +33,15 @@
     :draggable="false"
     class="jskos-vue-itemDetails-narrower"
     @select="$emit('select',$event.item)" />
+  <item-geolocation
+    :item="item"
+    active-color="#577fbb"
+    :show-tabs="false"
+    :show-ancestors="false"
+    :show-narrower="false"
+    :dropzone="false"
+    :draggable="false"
+    @select="$emit('select',$event.item)" />
 </template>
 
 <script setup>
