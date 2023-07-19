@@ -33,26 +33,24 @@
     :draggable="false"
     class="jskos-vue-itemDetails-narrower"
     @select="$emit('select',$event.item)" />
-  <item-geolocation
-    :item="item"
-    active-color="#577fbb"
-    :show-tabs="false"
-    :show-ancestors="false"
-    :show-narrower="false"
-    :dropzone="false"
-    :draggable="false"
-    @select="$emit('select',$event.item)" />
+  <item-geolocation v-if="hasGeolocation"
+                    :item="item"
+                    @select="$emit('select', $event.item)" />
+
 </template>
 
 <script setup>
 import { computed } from "vue"
 import ConceptSuggest from "./ConceptSuggest.vue"
+import ItemGeolocation from "./ItemGeolocation.vue"
 
 const props = defineProps({ item: Object, registry: Object })
 
 defineEmits(["select"])
 
 const inScheme = computed(() => (props.item?.inScheme||[])[0])
+const hasGeolocation = computed(() => !!props.item?.location) // Check if geolocation data is available
+
 </script>
 
 <style>
