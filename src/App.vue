@@ -11,6 +11,7 @@
         :item="item"
         :registry="registry"
         @select="selectItem" />
+      <button @click="fetchData">Fetch NOMISMA Data</button>
     </div>
     <div v-else>
       <!-- 404: TODO show search form to search vocabularies -->
@@ -21,14 +22,16 @@
       :registry="registry"
       @select="selectItem" />
   </div>
+  <rest-component ref="restComponentRef" />
 </template>
 
 <script setup>
 import ConceptSchemeSelection from "./components/ConceptSchemeSelection.vue"
 import ConceptSchemeView from "./components/ConceptSchemeView.vue"
 import ItemView from "./components/ItemView.vue"
+import RestComponent from "./components/RestComponent.vue"
 import { link } from "../lib/utils.js"
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 import jskos from "jskos-tools"
 import { cdk } from "cocoda-sdk"
 
@@ -54,6 +57,18 @@ const jskosType = jskos.guessObjectType(item)
 const selectItem = item => {
   if (item.uri) {
     location.href = link(item.uri, namespace)
+  }
+}
+
+// Reference to the RestComponent
+const restComponentRef = ref(null)
+
+// Method to fetch data using RestComponent
+const fetchData = () => {
+  // Ensure the RestComponent reference is available
+  if (restComponentRef.value) {
+    // Call the fetchData method in RestComponent
+    restComponentRef.value.fetchData()
   }
 }
 </script>
